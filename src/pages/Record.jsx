@@ -14,6 +14,7 @@ import { maskDotsToStars } from "../utils/maskDisplay";
 import LoadingSpinner from "../components/Loading";
 import AngryModal from "../components/AngryModal";
 import ConfirmModal from "../components/ConfirmModal";
+import api from "../api/api";
 
 
 const debugForm = async (form) => {
@@ -74,19 +75,19 @@ export default function Record() {
   const utterStartRef = useRef(null); // ✅ 발화 시작시간
 
   // 노출 설정에 따라 WS URL 생성
-  const buildWsUrl = () => {
-    const base = "ws://localhost:9000/ws/stt";
-    const params = new URLSearchParams({
-      encoding: "OGG_OPUS",
-      sample_rate: "16000",
-      use_itn: "true",
-      model_name: "sommers_ko",
-      domain: "CALL",
-      // 필요시: use_disfluency_filter: "true",
-    });
-    params.set("use_profanity_filter", exposureOn ? "true" : "false");
-    return `${base}?${params.toString()}`;
-  };
+// 예: Record.jsx
+const buildWsUrl = () => {
+  const proto = location.protocol === "https:" ? "wss" : "ws";
+  const params = new URLSearchParams({
+    encoding: "OGG_OPUS",
+    sample_rate: "16000",
+    use_itn: "true",
+    model_name: "sommers_ko",
+    domain: "CALL",
+    use_profanity_filter: exposureOn ? "false" : "true",
+  });
+  return `${proto}://${location.host}/ws/stt?${params.toString()}`;
+};
 
   // 기존 상수 대신 함수 호출 결과 사용
   const WS_URL = buildWsUrl();
@@ -122,12 +123,12 @@ export default function Record() {
 
   const scrollToBottom = () =>
     listEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  const HERO_IMG_CLASS = "w-48 h-48";
+  const HERO_IMG_CLASS = "w-36 h-36";
   const isAngry = (em) => {
     const v = String(em || "").toLowerCase();
     // 백엔드 변형 라벨들 대비 + 접두어 방지
     return (
-      ["angry"].includes(v) ||
+      ["angry", "disgust"].includes(v) ||
       v.startsWith("ang")
     );
   };
@@ -135,9 +136,10 @@ export default function Record() {
   const pickMime = () => {
     const c = [
       "audio/ogg;codecs=opus",
-      "audio/webm;codecs=opus",
-      "audio/ogg",
-      "audio/webm",
+    "audio/webm;codecs=opus",
+    "audio/webm",
+    // "audio/mp4",   // Safari
+    // "audio/aac" 
     ];
     for (const m of c)
       if (window.MediaRecorder && MediaRecorder.isTypeSupported(m)) return m;
@@ -228,9 +230,21 @@ export default function Record() {
     }
     setConnected(false);
   };
+  const ensureMicSupport = () => {
+  if (!window.isSecureContext) {
+    throw new Error("INSECURE_CONTEXT"); // https 필요
+  }
+  if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== 'function') {
+    throw new Error("MEDIA_UNAVAILABLE"); // 브라우저/권한 문제
+  }
+};
 
   /** ---------- Recording ---------- */
   const startRecording = async (who) => {
+    try {
+    ensureMicSupport();
+    // ... 기존 로직
+  
     // 이번 발화 준비
     currentChunksRef.current = [];
     utterStartRef.current = Date.now(); // ✅ 시작시간
@@ -281,6 +295,14 @@ export default function Record() {
 
     rec.start(150);
     setIsRecording(true);
+    } catch (e) {
+    if (e.message === "INSECURE_CONTEXT") {
+      alert("마이크 사용을 위해 https 로 접속해야 해요. (예: ngrok/터널 사용)");
+    } else {
+      alert("이 브라우저에서 마이크를 사용할 수 없습니다. 권한/브라우저를 확인하세요.");
+    }
+    return;
+  }
   };
 
   const stopRecording = async () => {
