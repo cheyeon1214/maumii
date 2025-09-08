@@ -5,6 +5,7 @@ import Title from "../components/Title";
 import Button from "../components/Button";
 import ThemeSelector from "../components/ThemeSelector";
 import LevelSelector from "../components/LevelSelector";
+import api from "../api/api";
 
 // (선택) 에셋이 있으면 경로 바꿔서 사용하세요.
 // import cloud from "../assets/cloud.png";
@@ -37,29 +38,21 @@ export default function RegisterDetail() {
     };
 
     try {
-      console.log("signup payload:", finalPayload);
-      // axios 인스턴스(api) 없으면 fetch로 교체 ↓
-      // await api.post("http://localhost:9000/api/users/signup", finalPayload);
+  const res = await api.post("/auth/signup", finalPayload);
 
-      const res = await fetch("http://localhost:9000/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(finalPayload),
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        console.error("signup failed:", res.status, text);
-        alert("회원가입 실패: " + res.status);
-        return;
-      }
-
-      alert("회원가입 성공!");
-      navigate("/login");
-    } catch (err) {
-      console.error(err);
-      alert("회원가입 실패(네트워크)");
-    }
+  // axios는 200~299 응답이면 여기로 들어옴
+  console.log("회원가입 응답:", res.data);
+  alert("회원가입 성공!");
+} catch (err) {
+  // axios는 4xx/5xx 에러일 때 catch로 바로 들어옴
+  if (err.response) {
+    console.error("회원가입 실패:", err.response.status, err.response.data);
+    alert("회원가입 실패: " + err.response.status);
+  } else {
+    console.error("네트워크 오류:", err);
+    alert("네트워크 오류가 발생했습니다.");
+  }
+}
   };
 
   if (!state) return null;

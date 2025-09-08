@@ -4,11 +4,11 @@ import api from "./api"; // baseURL, withCredentials 세팅된 axios 인스턴�
 export const SmsAPI = {
   // 인증 코드 전송
   sendCode(phone) {
-    return api.post("/api/sms/send", { phone }).then((res) => res.data);
+    return api.post("/sms/send", { phone }).then((res) => res.data);
   },
 
   // 인증 코드 검증
   verifyCode({ phone, code }) {
-    return api.post("/api/sms/verify", { phone, code }).then((res) => res.data);
+    return api.post("/sms/verify", { phone, code }).then((res) => res.data);
   },
 };

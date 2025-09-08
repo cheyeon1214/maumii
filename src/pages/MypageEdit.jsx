@@ -71,7 +71,7 @@ export default function MypageEdit() {
       setLoading(true);
 
       // PUT /api/users/{uId}/account - 컨트롤러와 일치
-      await api.put(`/api/users/${user.uId}/account`, staged, {
+      await api.put(`/users/${user.uId}/account`, staged, {
         headers: { "Content-Type": "application/json" },
       });
 

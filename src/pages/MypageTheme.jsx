@@ -52,7 +52,7 @@ export default function MypageTheme() {
         uExposure: level === "false",
       };
 
-      await api.put(`/api/users/${user.uId}/preference`, requestData, {
+      await api.put(`/users/${user.uId}/preference`, requestData, {
         headers: { "Content-Type": "application/json" },
       });
 

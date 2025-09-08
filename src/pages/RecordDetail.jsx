@@ -1,7 +1,7 @@
-import axios from "axios";
+// import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../components/header";
+import Header from "../components/Header";
 import { FaRegEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 import SectionHeader from "../components/SectionHeader";
@@ -14,6 +14,7 @@ import ConfirmModal from "../components/ConfirmModal";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../hooks/useTheme";
 import api from "../api/api";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function RecordDetail() {
   const { user } = useAuth();
@@ -54,7 +55,7 @@ export default function RecordDetail() {
     }
     try {
        const res = await api.put(
-   `/api/records/record-list/${rlId}`,
+   `/records/record-list/${rlId}`,
    { rlName: editTitleValue, uId: userId }
  );
       // 성공 시 화면 반영
@@ -102,7 +103,7 @@ export default function RecordDetail() {
 
     try {
       // console.log(selectedSectionIds);
-      await api.delete("/api/records/record", {
+      await api.delete("/records/record", {
    data: idsToDelete.map(Number),
  });
 
@@ -141,7 +142,7 @@ export default function RecordDetail() {
 
     try {
       const res = await api.put(
-   `/api/records/bubble/${editingTalk.bId}`,
+   `/records/bubble/${editingTalk.bId}`,
    { bText: editingTalk.text, bEmotion: editingTalk.emotion }
  );
       const { bText, bEmotion } = res.data;
@@ -352,78 +353,90 @@ export default function RecordDetail() {
         })}
       </div>
 
-      {/* ===== Bubble Update Sheet ===== */}
       {sheetOpen &&
-        editingTalk &&
-        createPortal(
-          <div className="absolute inset-0 z-50">
-            <div
-              className="absolute inset-0 bg-black/40 rounded-3xl"
-              onClick={() => {
-                setSheetOpen(false);
-                setEditingTalk(null);
-              }}
-            />
+  editingTalk &&
+  createPortal(
+    <div className="absolute inset-0 z-50">
+      {/* Backdrop: 페이드 */}
+      <motion.div
+        className="absolute inset-0 bg-black/40 rounded-3xl"
+        onClick={() => {
+          setSheetOpen(false);
+          setEditingTalk(null);
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.18 }}
+      />
 
-            <div
-              className="fixed left-1/2 -translate-x-1/2 md:translate-y-12 translate-y-[98px] w-full md:max-w-[390px] pointer-events-none"
-              style={{ bottom: `calc(${TABBAR_H}px)` }}
-            >
-              <div className="pointer-events-auto w-full rounded-b-2xl rounded-t-[40px] bg-white shadow-xl">
-                <div className="text-lg font-semibold mb-3 mt-3 pt-6 pb-2 text-center">
-                  녹음 내용 수정하기
+      {/* ⬇️ 이 컨테이너는 motion 쓰지 말고 그대로 유지 (위치 보존) */}
+      <div
+        className="fixed left-1/2 -translate-x-1/2 md:translate-y-12 translate-y-[60px] w-full md:max-w-[390px] pointer-events-none"
+        style={{ bottom: `calc(70px)` }}
+      >
+        {/* ⬇️ 안쪽 패널만 motion으로 슬라이드 업 */}
+        <motion.div
+          className="pointer-events-auto w-full rounded-b-2xl rounded-t-[40px] bg-white shadow-xl"
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: "tween", duration: 0.22, ease: "easeOut" }}
+        >
+          <div className="text-lg font-semibold mb-3 mt-3 pt-6 pb-2 text-center">
+            녹음 내용 수정하기
+          </div>
+
+          <div className="flex justify-center flex-wrap mt-4 px-4 pb-6">
+            {EMOTIONS.map((em) => {
+              const selected = editingTalk?.emotion === em.key;
+              return (
+                <div
+                  key={em.id}
+                  className={`w-20 h-20 rounded-full flex items-center justify-center cursor-pointer
+                    transition-all duration-200 transition-transform
+                    ${selected ? "shadow-[0_0_8px_rgba(126,104,255,0.7)] scale-110" : "ring-0 scale-100"}
+                  `}
+                  onClick={() =>
+                    setEditingTalk(prev => prev ? { ...prev, emotion: em.key } : prev)
+                  }
+                >
+                  <img src={em.image[currentTheme]} alt={em.key} className="w-16 h-16 object-cover" />
                 </div>
-                <div className="flex justify-center flex-wrap mt-4 px-4 pb-6">
-                    {EMOTIONS.map((em) => {
-                      const selected = editingTalk?.emotion === em.key; // 현재 선택된 감정과 비교
-                      return (
-                        <div
-                          key={em.id}
-                          className={`w-20 h-20 rounded-full flex items-center justify-center cursor-pointer
-                            transition-all duration-200 transition-transfrom
-                            ${selected ? "shadow-[0_0_8px_rgba(126,104,255,0.7)] scale-110" : "ring-0 scale-100"}
-                          `}
-                          onClick={() =>
-                            setEditingTalk(prev => prev ? { ...prev, emotion: em.key } : prev)
-                          }
-                        >
-                          <img src={em.image[currentTheme]} alt={em.key} className="w-16 h-16 object-cover" />
-                        </div>
-                      );
-                    })}
-                </div>
-                <div className="px-4 pb-4">
-                  <textarea
-                    className="w-full min-h-[140px] rounded-xl border border-slate-200 p-3 outline-none"
-                    value={editingTalk.text}
-                    onChange={(e) =>
-                      setEditingTalk((prev) => prev ? { ...prev, text: e.target.value } : prev )
-                    }
-                  />
-                  <div className="flex justify-between gap-2 mt-3">
-                    <button
-                      className="px-4 py-2 rounded-xl border border-slate-300"
-                      onClick={() => {
-                        setSheetOpen(false);
-                        setEditingTalk(null);
-                      }}
-                    >
-                      취소
-                    </button>
-                    <button
-                      className="px-4 py-2 rounded-xl bg-purple-600 text-white"
-                      onClick={saveTalkText}
-                    >
-                      저장
-                    </button>
-                  </div>
-                </div>
-              </div>
+              );
+            })}
+          </div>
+
+          <div className="px-4 pb-4">
+            <textarea
+              className="w-full min-h-[140px] rounded-xl border border-slate-200 p-3 outline-none"
+              value={editingTalk.text}
+              onChange={(e) =>
+                setEditingTalk((prev) => prev ? { ...prev, text: e.target.value } : prev )
+              }
+            />
+            <div className="flex justify-between gap-2 mt-3">
+              <button
+                className="px-4 py-2 rounded-xl border border-slate-300"
+                onClick={() => {
+                  setSheetOpen(false);
+                  setEditingTalk(null);
+                }}
+              >
+                취소
+              </button>
+              <button
+                className="px-4 py-2 rounded-xl bg-purple-600 text-white"
+                onClick={saveTalkText}
+              >
+                저장
+              </button>
             </div>
-          </div>,
-          document.body
-        )
-      }
+          </div>
+        </motion.div>
+      </div>
+    </div>,
+    document.body
+  )
+}
 
       <ConfirmModal
         isOpen={openDeleteModal}

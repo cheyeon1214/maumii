@@ -75,7 +75,7 @@ export function AuthProvider({ children }) {
 
       try {
         console.log("=== /auth/me API 호출 시작 ===");
-        const response = await api.get("/api/auth/me");
+        const response = await api.get("/auth/me");
         console.log("API 응답:", response);
 
         // 응답이 실제 사용자 데이터인지 확인
@@ -122,7 +122,7 @@ export function AuthProvider({ children }) {
 
     // 여러 가능한 엔드포인트 시도
     const possibleEndpoints = [
-      "/api/auth/signin", // 기본
+      "/auth/signin", // 기본
     ];
 
     for (const endpoint of possibleEndpoints) {
@@ -150,7 +150,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const fetchMe = useCallback(async () => {
-    const { data } = await api.get("/api/auth/me");
+    const { data } = await api.get("/auth/me");
     dispatch({ type: "SET_USER", payload: data });
     return data;
   }, []);
@@ -162,7 +162,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(async () => {
     try {
-      await api.post("/api/auth/logout");
+      await api.post("/auth/logout");
     } finally {
       dispatch({ type: "LOGOUT" });
     }
