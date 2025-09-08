@@ -1,10 +1,10 @@
-import axios from "axios";
+// import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 import CalendarBottomSheet from "../components/CalendarBottomSheet";
-import Header from "../components/header";
+import Header from "../components/Header";
 import ConfirmModal from "../components/ConfirmModal";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/api";
@@ -50,8 +50,7 @@ export default function RecordList() {
   useEffect(() => {
     if (!uId) return; // 로그인 정보 없으면 실행 X
     // 백엔드 API 호출
-    axios
-      api.get(`/api/records/${uId}/record-list`)
+      api.get(`/records/${uId}/record-list`)
       .then((res) => {
         console.log("API 응답 테스트 : ", res.data);
         setRecordList(res.data); // 화면용
@@ -66,10 +65,9 @@ export default function RecordList() {
       return;
     }
     // 백엔드 컨트롤러 호출 ... 단어 검색
-    axios
-      .get(
-        api.get(`/api/records/${uId}/record-list/${encodeURIComponent(keyword)}`)
-      )
+
+        api.get(`/records/${uId}/record-list/${encodeURIComponent(keyword)}`)
+      
       .then((res) => {
         if (res.data.length === 0) {
           setRecordList(allRecords);
@@ -94,7 +92,7 @@ export default function RecordList() {
         rlName: newName,
         uId: uId, // props에서 바로 사용
       };
-      const res = await api.put(`/api/records/record-list/${rlId}`, body);
+      const res = await api.put(`/records/record-list/${rlId}`, body);
 
       const updated = res.data;
       // recordList 업데이트
@@ -121,7 +119,7 @@ export default function RecordList() {
   const handleDelete = async () => {
     if (!targetRecordListId) return;
     try {
-      await api.delete(`/api/records/record-list/${targetRecordListId}`);
+      await api.delete(`/records/record-list/${targetRecordListId}`);
       // recordList에서 삭제
       setRecordList((prev) =>
         prev.filter((r) => r.rlId !== targetRecordListId)

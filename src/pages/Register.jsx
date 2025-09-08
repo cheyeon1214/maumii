@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import Title from "../components/Title";
 import Collapse from "../components/Collapse"
 import { SmsAPI } from "../api/sms";
+import api from "../api/api";
 
 export default function Register() {
     const navigate = useNavigate();
@@ -72,7 +73,7 @@ export default function Register() {
     };
 
     const pwMismatch = pw && pw2 && pw !== pw2;
-    const canSubmit = name && userId && pw && pw2 && !pwMismatch && phone && code;
+    const canSubmit = name && userId && pw && pw2 && !pwMismatch && phone;
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!canSubmit) {
@@ -94,27 +95,27 @@ export default function Register() {
         setMessage(null);
 
         try {
-            const res = await fetch(
-                `http://localhost:9000/api/users/${encodeURIComponent(id)}`,
-                {
-                    method: "GET",
-                }
-            );
+            const res = await api.get(`/users/${encodeURIComponent(id)}`);
 
-            if (res.ok) {
-                // 200이면 유저가 존재 ⇒ 중복
+            if (res.status === 200) {
+                // 유저 존재 ⇒ 중복
                 setMessage("이미 사용 중인 아이디입니다.");
             } else if (res.status === 404) {
-                // 404면 유저 없음 ⇒ 사용 가능
+                // 이 케이스는 axios가 throw 하기 때문에 catch로 감
                 setMessage("사용 가능한 아이디입니다.");
             } else {
                 setMessage("서버 응답을 확인할 수 없습니다.");
             }
-        } catch (e) {
-            setMessage("네트워크 오류가 발생했습니다.");
-        } finally {
+            } catch (e) {
+            if (e.response?.status === 404) {
+                // axios는 404/500 같은 응답을 throw → 여기서 체크
+                setMessage("사용 가능한 아이디입니다.");
+            } else {
+                setMessage("네트워크 오류가 발생했습니다.");
+            }
+            } finally {
             setLoading(false);
-        }
+            }
     };
 
     const onKeyDown = (e) => {

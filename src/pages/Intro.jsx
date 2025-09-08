@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect } from 'react'; 
+import maeumiText from "../assets/images/logo.svg";
+import maumiMascot from "../assets/images/maumi.svg";
 
 export default function Intro() {
   useEffect(() => {
@@ -25,8 +27,7 @@ export default function Intro() {
 
       {/* 마음이 텍스트 - 반응형 */}
       <motion.div
-        className="text-center mb-2 px-4 z-10
-        text-[#A960B0] text-5xl font-['KoreanSNMB'] font-normal"
+        className="text-center mb-2 px-4 z-10"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{
@@ -35,8 +36,9 @@ export default function Intro() {
           type: "spring",
           stiffness: 100,
         }}
+
       >
-        마음이
+        <img src={maeumiText} alt="마음이" />
       </motion.div>
 
       {/* 마스코트 이미지 - 반응형 */}
@@ -47,7 +49,7 @@ export default function Intro() {
         transition={{ duration: 1, delay: 0.8 }}
       >
         <motion.img
-          src="src/assets/maumi.svg"
+          src={maumiMascot}
           alt="maumi"
           className="w-72 h-72 max-w-[80vw] max-h-[40vh] object-contain"
           animate={{

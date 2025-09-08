@@ -3,7 +3,14 @@ import { useEffect, useState } from "react";
 import { fmtDateLabel, fmtDurationKorean, fmtStartLabel, toMsFromLocalTime } from "../utils/time";
 import { RecordsAPI } from "../api/records";
 
-const absUrl = (u) => (u?.startsWith("/") ? `http://localhost:9000${u}` : (u || ""));
+const absUrl = (u) => {
+   if (!u) return "";
+   // 이미 절대경로면 그대로 사용
+   if (u.startsWith("http://") || u.startsWith("https://")) return u;
+   // /voices/... 같이 상대경로면 현재 오리진에 붙이기
+  if (u.startsWith("/")) return `${window.location.origin}${u}`;
+   return u;
+ };
 
 export function useRecords(rlId, userId) {
   const [title, setTitle] = useState("대화 기록");
