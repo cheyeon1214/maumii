@@ -13,6 +13,7 @@ import { useRecords } from "../hooks/useRecords.js";
 import ConfirmModal from "../components/ConfirmModal";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../hooks/useTheme";
+import api from "../api/api";
 
 export default function RecordDetail() {
   const { user } = useAuth();
@@ -52,13 +53,10 @@ export default function RecordDetail() {
       return;
     }
     try {
-      const res = await axios.put(
-        `http://localhost:9000/api/records/record-list/${rlId}`,
-        {
-          rlName: editTitleValue,
-          uId: userId, // props 에서 바로 사용
-        }
-      );
+       const res = await api.put(
+   `/api/records/record-list/${rlId}`,
+   { rlName: editTitleValue, uId: userId }
+ );
       // 성공 시 화면 반영
       setTitle(res.data.rlName);
       setEditTitleValue(res.data.rlName); // 편집 상태도 갱신
@@ -104,9 +102,9 @@ export default function RecordDetail() {
 
     try {
       // console.log(selectedSectionIds);
-      await axios.delete("http://localhost:9000/api/records/record", {
-        data: idsToDelete.map(Number), // DELETE 요청은 body에 data 필드로 전달
-      });
+      await api.delete("/api/records/record", {
+   data: idsToDelete.map(Number),
+ });
 
       // 성공 시 프론트에서 선택 삭제 반영
       // sections는 useRecords 훅에서 가져온 상태
@@ -142,13 +140,10 @@ export default function RecordDetail() {
     console.log("PUT payload:", { bText: editingTalk.text, bEmotion: editingTalk.emotion });
 
     try {
-      const res = await axios.put(
-        `http://localhost:9000/api/records/bubble/${editingTalk.bId}`,
-        {
-          bText: editingTalk.text,
-          bEmotion: editingTalk.emotion,
-        }
-      );
+      const res = await api.put(
+   `/api/records/bubble/${editingTalk.bId}`,
+   { bText: editingTalk.text, bEmotion: editingTalk.emotion }
+ );
       const { bText, bEmotion } = res.data;
 
       setLocalSections((prevSections) =>

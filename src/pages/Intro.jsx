@@ -26,7 +26,7 @@ export default function Intro() {
       {/* 마음이 텍스트 - 반응형 */}
       <motion.div
         className="text-center mb-2 px-4 z-10
-        text-[#A960B0] text-5xl font-[KoreanSNMB] font-normal"
+        text-[#A960B0] text-5xl font-['KoreanSNMB'] font-normal"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{

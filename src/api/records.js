@@ -27,7 +27,7 @@ export const RecordsAPI = {
 
   /** (테스트) 서버로 텍스트 보내서 감정라벨 받기 */
   async sendTextForEmotion(payload) {
-    const { data } = await api.post("/healthz", payload);
+    const { data } = await api.post("/api/healthz", payload);
     return data;
   },
 };

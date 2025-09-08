@@ -50,7 +50,7 @@ function Bubble({ bId, me = false, text = "", sub, isActive = false, emotion }) 
 
       {/* 나(오른쪽) */}
       {me && (
-        <div className="ml-auto mr-0 flex items-end gap-3">
+        <div className="ml-auto mr-0 flex justify-end gap-3">
           <div className="max-w-[70%]">
             <div
               className={[

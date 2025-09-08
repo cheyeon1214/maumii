@@ -14,6 +14,7 @@ export default {
       },
       fontFamily: {
         sans: ["Pretendard", "sans-serif"],
+        korean: ["KoreanSNMB", "sans-serif"],
       },
       fontSize: {
         sm: ['14px', '20px'],

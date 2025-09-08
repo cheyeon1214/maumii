@@ -7,6 +7,7 @@ import CalendarBottomSheet from "../components/CalendarBottomSheet";
 import Header from "../components/header";
 import ConfirmModal from "../components/ConfirmModal";
 import { useAuth } from "../context/AuthContext";
+import api from "../api/api";
 
 // utils/dateFormat.js
 export function formatKoreanDateTime(dateString) {
@@ -50,7 +51,7 @@ export default function RecordList() {
     if (!uId) return; // 로그인 정보 없으면 실행 X
     // 백엔드 API 호출
     axios
-      .get(`http://localhost:9000/api/records/${uId}/record-list`)
+      api.get(`/api/records/${uId}/record-list`)
       .then((res) => {
         console.log("API 응답 테스트 : ", res.data);
         setRecordList(res.data); // 화면용
@@ -67,9 +68,7 @@ export default function RecordList() {
     // 백엔드 컨트롤러 호출 ... 단어 검색
     axios
       .get(
-        `http://localhost:9000/api/records/${uId}/record-list/${encodeURIComponent(
-          keyword
-        )}`
+        api.get(`/api/records/${uId}/record-list/${encodeURIComponent(keyword)}`)
       )
       .then((res) => {
         if (res.data.length === 0) {
@@ -95,10 +94,7 @@ export default function RecordList() {
         rlName: newName,
         uId: uId, // props에서 바로 사용
       };
-      const res = await axios.put(
-        `http://localhost:9000/api/records/record-list/${rlId}`,
-        body
-      );
+      const res = await api.put(`/api/records/record-list/${rlId}`, body);
 
       const updated = res.data;
       // recordList 업데이트
@@ -125,9 +121,7 @@ export default function RecordList() {
   const handleDelete = async () => {
     if (!targetRecordListId) return;
     try {
-      await axios.delete(
-        `http://localhost:9000/api/records/record-list/${targetRecordListId}`
-      );
+      await api.delete(`/api/records/record-list/${targetRecordListId}`);
       // recordList에서 삭제
       setRecordList((prev) =>
         prev.filter((r) => r.rlId !== targetRecordListId)
@@ -227,7 +221,7 @@ export default function RecordList() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-2 pt-6 pb-28">
+      <div className="flex-1 overflow-y-auto px-2 pt-6 pb-64">
         {/* 리스트 */}
         <ul className="space-y-4">
           {recordList.length === 0 && (
