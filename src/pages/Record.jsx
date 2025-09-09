@@ -14,8 +14,6 @@ import { maskDotsToStars } from "../utils/maskDisplay";
 import LoadingSpinner from "../components/Loading";
 import AngryModal from "../components/AngryModal";
 import ConfirmModal from "../components/ConfirmModal";
-import api from "../api/api";
-
 
 const debugForm = async (form) => {
   // ⚠️ 훅 사용 금지(컴포넌트 외부)

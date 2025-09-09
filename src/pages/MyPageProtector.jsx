@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 import Title from "../components/Title";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -21,7 +21,7 @@ export default function MypageProtector() {
     useEffect(() => {
         const fetchEmails = async () => {
             try {
-                const res = await axios.get("/mypage/protector");
+                const res = await api.get("/mypage/protector");
                 setList(res.data);
             } catch(error) {
                 console.log("API 에러: ", error);
@@ -37,7 +37,7 @@ export default function MypageProtector() {
             alert("빈 곳을 채워주세요.");
             return;
         }
-        const res = await axios.post("/mypage/protector", { email });
+        const res = await api.post("/mypage/protector", { email });
         setList((prev) => [...prev, res.data]); // 화면 비동기 업데이트
     };
 
@@ -45,7 +45,7 @@ export default function MypageProtector() {
     const handleDelete = async () => {
         if(!targetEmail) return;
         try {
-            await fetch("/api/emails/${targetEmail}", {
+            await fetch("/emails/${targetEmail}", {
                 method: "DELETE",
             });
             // 로컬 state 에서도 targetEmail 삭제 
