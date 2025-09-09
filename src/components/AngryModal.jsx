@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
+import maumiiCalm from "../assets/images/maumi.svg";
 
 export default function AngryModal({ open, onClose, onGuide }) {
   // 모달 열리면 스크롤 잠금
@@ -67,7 +68,7 @@ export default function AngryModal({ open, onClose, onGuide }) {
   {/* 상단: 마음이 */}
   <div className="mb-4 flex items-center justify-center">
     <motion.img
-      src="src/assets/maumi.svg"
+      src={maumiiCalm}
       alt="maumi"
       variants={enterVariants}
       initial="hidden"
