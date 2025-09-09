@@ -54,13 +54,13 @@ export default function Modal({
               <div className="flex divide-x divide-gray-300 justify-between">
                 <button
                   onClick={onCancel}
-                  className="w-1/2 py-4 text-400 font-semibold"
+                  className="w-1/2 py-4 text-400 font-semibold active:bg-gray-100 active:scale-95 transition"
                 >
                   아니오
                 </button>
                 <button
                   onClick={onConfirm}
-                  className="w-1/2 py-4 text-400 font-semibold"
+                  className="w-1/2 py-4 text-400 font-semibold active:bg-gray-100 active:scale-95 transition"
                 >
                   예
                 </button>
@@ -69,7 +69,7 @@ export default function Modal({
               <div className="flex">
                 <button
                   onClick={onCancel}
-                  className="w-full py-4 text-400 font-semibold"
+                  className="w-full py-4 text-400 font-semibold active:bg-gray-100 active:scale-95 transition"
                 >
                   닫기
                 </button>

@@ -7,10 +7,6 @@ import ThemeSelector from "../components/ThemeSelector";
 import LevelSelector from "../components/LevelSelector";
 import api from "../api/api";
 
-// (선택) 에셋이 있으면 경로 바꿔서 사용하세요.
-// import cloud from "../assets/cloud.png";
-// import bear from "../assets/bear.png";
-
 export default function RegisterDetail() {
   const { state } = useLocation(); // 1단계 데이터
   const navigate = useNavigate();
