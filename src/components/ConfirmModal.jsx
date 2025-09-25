@@ -68,6 +68,7 @@ const handleConfirm = () => {
                 </button>
                 <button
                   onClick={handleConfirm}
+
                   className="w-1/2 py-4 text-400 font-semibold active:bg-gray-100 active:scale-95 transition"
                 >
                   예

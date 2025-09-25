@@ -80,12 +80,14 @@ export default function SaveModal({ open, onClose, lists, onConfirm }) {
             <div className="flex gap-3">
               <input
                 className="w-[188px] h-10 border rounded-lg px-3 bg-gray-50"
+
                 placeholder="새 기록함 01"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
               />
               <button
                 className="w-20 h-10 text-sm text-center border rounded-lg whitespace-nowrap"
+
                 onClick={() => setMode("select")}
               >
                 목록
