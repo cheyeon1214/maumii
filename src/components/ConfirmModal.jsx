@@ -2,6 +2,8 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+
+
 export default function Modal({
   isOpen,
   mode = "confirm", // "confirm" | "alert"
@@ -11,6 +13,12 @@ export default function Modal({
   onCancel,
   children,
 }) {
+  const handleCancel = () => {
+  setTimeout(onCancel, 150); // 150ms 후 닫기
+};
+const handleConfirm = () => {
+  setTimeout(onConfirm, 150); // 150ms 후 닫기
+};
   return (
     <AnimatePresence>
       {isOpen && (
@@ -53,13 +61,13 @@ export default function Modal({
             {mode === "confirm" ? (
               <div className="flex divide-x divide-gray-300 justify-between">
                 <button
-                  onClick={onCancel}
+                  onClick={handleCancel}
                   className="w-1/2 py-4 text-400 font-semibold active:bg-gray-100 active:scale-95 transition"
                 >
                   아니오
                 </button>
                 <button
-                  onClick={onConfirm}
+                  onClick={handleConfirm}
                   className="w-1/2 py-4 text-400 font-semibold active:bg-gray-100 active:scale-95 transition"
                 >
                   예
@@ -68,7 +76,7 @@ export default function Modal({
             ) : (
               <div className="flex">
                 <button
-                  onClick={onCancel}
+                  onClick={handleCancel}
                   className="w-full py-4 text-400 font-semibold active:bg-gray-100 active:scale-95 transition"
                 >
                   닫기

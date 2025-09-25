@@ -52,9 +52,7 @@ export default function MypageTheme() {
         uExposure: level === "false",
       };
 
-      await api.put(`/users/${user.uId}/preference`, requestData, {
-        headers: { "Content-Type": "application/json" },
-      });
+      await api.put(`/users/${user.uId}/preference`, requestData);
 
 
         updateUserInfo({
@@ -63,16 +61,17 @@ export default function MypageTheme() {
         });
         setShowSaved(true);
     } catch (err) {
-      console.error("테마 설정 업데이트 실패:", err);
-
-      let msg = "저장에 실패했습니다.";
-      if (err?.response?.data?.message) msg = err.response.data.message;
-      else if (err?.response?.status === 404) msg = "사용자를 찾을 수 없습니다.";
-      else if (err?.response?.status === 400) msg = "입력 정보를 확인해주세요.";
-      else if (err?.message) msg = err.message;
-
-      setErrorMsg(msg); // 에러 알럿
-    } finally {
+  const status = err?.response?.status;
+  const data = err?.response?.data;
+  console.error("테마 설정 업데이트 실패:", status, data, err);
+  let msg = "저장에 실패했습니다.";
+  if (data?.message) msg = data.message;
+  else if (status === 404) msg = "사용자를 찾을 수 없습니다.";
+  else if (status === 400) msg = "입력 정보를 확인해주세요.";
+  else if (status === 401) msg = "로그인이 필요합니다.";
+  else if (status === 403) msg = "권한이 없습니다.";
+  setErrorMsg(msg);
+} finally {
       setLoading(false);
     }
   };
@@ -140,7 +139,7 @@ export default function MypageTheme() {
         description="테마 설정이 저장되었습니다."
         onCancel={() => {
           setShowSaved(false);
-          window.location.reload(); // 기존 동작 유지
+          // window.location.reload(); // 기존 동작 유지
         }}
       />
 

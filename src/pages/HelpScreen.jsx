@@ -71,10 +71,10 @@ export default function HelpScreen({ onClose }) {
                     <img src="src/assets/images/구르미.svg"></img>
                 </span>
             </div> */}
-        <RecordButton
+        {/* <RecordButton
           role="partner"
           className="absolute left-1/2 -translate-x-1/2 top-1 h-20 w-20 text-notice"
-        />
+        /> */}
 
         {/* 1-1) 상단 작은 원(카드) 위치로 향하는 '위쪽' 세로 화살표 */}
         {/* 작은 원이 화면 상단 중앙 부근에 있다고 가정하여 중앙 조금 아래에서 위로 향하게 배치 */}
@@ -84,7 +84,7 @@ export default function HelpScreen({ onClose }) {
         />
 
         {/* 2) 가운데 안내문 (큰 캐릭터 위에 걸치도록 중앙 배치) */}
-        <div className="absolute left-1/2 top-[45%] md:top-[47%] -translate-x-1/2 -translate-y-1/2 text-center font-semibold text-[18px]">
+        <div className="absolute left-1/2 top-[45%] md:top-[47%] w-80 -translate-x-1/2 -translate-y-1/2 text-center font-semibold text-[18px]">
           꾹~ 눌러서 녹음해주세요!
           <br />
           구르미가 감정을 표현해드립니다
@@ -101,10 +101,10 @@ export default function HelpScreen({ onClose }) {
         </div>
 
         {/* 내 버튼 */}
-        <RecordButton
+        {/* <RecordButton
           role="me"
           className="absolute left-1/2 -translate-x-1/2 -bottom-20 md:bottom-38 h-20 w-20 text-notice"
-        />
+        /> */}
         {/* <div className="cursor-pointer m-auto mt-8 w-20 h-20 rounded-full bg-white border-4 border-cloud-mine flex items-center justify-center">
           <span className="w-12 h-12">
             <img src="src/assets/images/구르미.svg" />

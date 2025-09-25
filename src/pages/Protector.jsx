@@ -34,7 +34,7 @@ export default function Protector() {
       try {
         setLoading(true);
         // GET /api/users/{uId}/protectors - 컨트롤러와 일치
-        const response = await api.get(`/api/users/${user.uId}/protectors`);
+        const response = await api.get(`/users/${user.uId}/protectors`);
         console.log("보호자 목록:", response.data);
         setList(response.data || []);
       } catch (error) {
@@ -79,7 +79,7 @@ export default function Protector() {
       setSendLoading(true);
 
       // POST /api/users/{uId}/protectors/send-code
-      await api.post(`/api/users/${user.uId}/protectors/send-code`, null, {
+      await api.post(`/users/${user.uId}/protectors/send-code`, null, {
         params: { email: email.trim() },
       });
 
@@ -119,7 +119,7 @@ export default function Protector() {
       setVerifyLoading(true);
 
       // POST /api/users/{uId}/protectors/verify-code
-      await api.post(`/api/users/${user.uId}/protectors/verify-code`, null, {
+      await api.post(`/users/${user.uId}/protectors/verify-code`, null, {
         params: {
           email: email.trim(),
           code: code.trim(),
@@ -167,7 +167,7 @@ export default function Protector() {
 
       // POST /api/users/{uId}/protectors - 컨트롤러와 일치
       const response = await api.post(
-        `/api/users/${user.uId}/protectors`,
+        `/users/${user.uId}/protectors`,
         null,
         {
           params: { pEmail: email.trim() },
@@ -213,7 +213,7 @@ export default function Protector() {
 
     try {
       await api.delete(
-        `/api/users/${user.uId}/protectors/${targetProtector.pId}`
+        `/users/${user.uId}/protectors/${targetProtector.pId}`
       );
 
       // 로컬 state에서도 삭제
