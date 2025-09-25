@@ -72,10 +72,6 @@ export default function Mypage() {
           <span className="font-bold text-gray-500">테마 변경</span>
           <IoIosArrowForward className="text-gray-500" />
         </Link>
-        <Link to="/" className="h-7 mx-5 flex justify-between items-center">
-          <span className="font-bold text-gray-500">오디오 설정</span>
-          <IoIosArrowForward className="text-gray-500" />
-        </Link>
       </div>
       <div className="mt-10">
         <button

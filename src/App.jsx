@@ -42,9 +42,9 @@ export default function App() {
               <Route path="/record-list" element={<RecordList />} />
               <Route path="/record-list/:rlId" element={<RecordDetail />} />
               <Route path="/emotion" element={<Emotion />} />
-              // React Router
-<Route path="/oauth/success" element={<div>로그인 성공</div>} />
-<Route path="/oauth/fail" element={<div>로그인 실패</div>} />
+
+              <Route path="/oauth/success" element={<div>로그인 성공</div>} />
+              <Route path="/oauth/fail" element={<div>로그인 실패</div>} />
             </Route>
           </Route>
 

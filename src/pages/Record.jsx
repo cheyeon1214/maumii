@@ -14,6 +14,7 @@ import { maskDotsToStars } from "../utils/maskDisplay";
 import LoadingSpinner from "../components/Loading";
 import AngryModal from "../components/AngryModal";
 import ConfirmModal from "../components/ConfirmModal";
+import { AnimatePresence, motion } from "framer-motion";
 
 const debugForm = async (form) => {
   // ⚠️ 훅 사용 금지(컴포넌트 외부)
@@ -63,6 +64,8 @@ export default function Record() {
     who: null,
     text: "",
   });
+
+  const hasRecording = sessionBubbles.length > 0;
 
   const wsRef = useRef(null);
   const mediaRecRef = useRef(null);
@@ -564,29 +567,39 @@ const buildWsUrl = () => {
       />
 
       {/* 중앙: 히어로(항상) + 채팅 */}
-      <div className="flex-1 px-6 overflow-hidden flex flex-col items-center">
+<div className="flex-1 px-6 overflow-hidden flex flex-col items-center">
+  {/* 1 히어로: 항상 표시, 상태에 따라 소스/투명도 변경 */}
+  <div className="mt-4 flex flex-col items-center space-y-2">
+    <div className="flex justify-center my-3 relative">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={`${currentTheme}-${emotion || "hero"}`} // 감정이 바뀔 때마다 다시 마운트
+          src={getEmotionImg(currentTheme, emotion)}
+          alt={emotion || "hero"}
+          className={`${HERO_IMG_CLASS} ${
+            composing.active ? "opacity-40" : "opacity-100"
+          }`}
+          initial={{ rotate: 0, opacity: 0 }}
+          animate={{
+            rotate: [0, -8, 8, -5, 5, 0], // 흔들 흔들
+            opacity: 1,
+          }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+        />
+      </AnimatePresence>
 
-        {/* 1) 히어로: 항상 표시, 상태에 따라 소스/투명도 변경 */}
-        <div className="mt-4 flex flex-col items-center space-y-2">
-          <div className="flex justify-center my-3 relative">
-            <img
-              src={getEmotionImg(currentTheme, emotion)}
-              alt={emotion || "hero"}
-              className={`${HERO_IMG_CLASS} transition-opacity duration-300 ${composing.active ? "opacity-40" : "opacity-100"
-                }`}
-            />
-
-            {composing.active && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <LoadingSpinner />
-              </div>
-            )}
-          </div>
-          {/* 녹음 전, 첫 화면에서만 "새로운 녹음" 텍스트 표시 */}
-          {!isRecording && chat.length === 0 && (
-            <div className="text-white text-lg font-semibold">새로운 녹음</div>
-          )}
+      {composing.active && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <LoadingSpinner />
         </div>
+      )}
+    </div>
+    {/* 녹음 전, 첫 화면에서만 "새로운 녹음" 텍스트 표시 */}
+    {!isRecording && chat.length === 0 && (
+      <div className="text-white text-lg font-semibold">새로운 녹음</div>
+    )}
+  </div>
 
 
         {/* 2) 채팅/진행중 말풍선 영역: 스크롤 가능 */}
@@ -640,7 +653,7 @@ const buildWsUrl = () => {
       <div className="mt-3 pb-[calc(env(safe-area-inset-bottom)+140px)]">
         <div className="flex items-center justify-center gap-12 select-none">
           {/* 왼쪽: 취소 (결과가 있을 때만 표시) */}
-          {!isRecording && chat.length === 1 && (
+          {!isRecording && (chat.length !== 0 || hasRecording) && (
             <button
               onClick={() => setRecordClose(true)}
               className="text-white text-lg font-semibold opacity-90"
@@ -660,7 +673,7 @@ const buildWsUrl = () => {
           />
 
           {/* 오른쪽: 저장 (결과가 있을 때만 표시) */}
-          {!isRecording && chat.length === 1 && (
+          {!isRecording && (chat.length !== 0 || hasRecording) && (
             <button
               onClick={() => setShowSave(true)}
               className="text-white text-lg font-semibold opacity-90"
