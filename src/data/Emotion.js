@@ -21,7 +21,7 @@ const EMOTIONS = [
   {
     id: 1,
     key: "happy",
-    name: "행복함",
+    name: "행복",
     description: [
       "이 표정은 상대방, 혹은 내가",
       "기분이 아주 좋은 상태임을 말합니다.",
@@ -33,7 +33,7 @@ const EMOTIONS = [
   {
     id: 2,
     key: "calm",
-    name: "차분함",
+    name: "차분",
     description: [
       "이 표정은 상대방, 혹은 내가",
       "차분하게 상대의 얘기를 들을 준비가 되었다는 뜻이에요.",
@@ -57,7 +57,7 @@ const EMOTIONS = [
   {
     id: 4,
     key: "scared",
-    name: "무서움",
+    name: "공포",
     description: [
       "이 표정은 상대방, 혹은 내가",
       "무서워하는 상태임을 말합니다.",

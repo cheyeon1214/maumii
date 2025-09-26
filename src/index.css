@@ -14,3 +14,10 @@ body {
 /* (선택) 모바일 기본 타이포 */
 /* :root { --fs-body: clamp(14px, 3.5vw, 18px); } */
 body { font-size: var(--fs-body); }
+
+@font-face {
+  font-family: "KCCGanpan";
+  src: url("./assets/fonts/KCCGanpan.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
