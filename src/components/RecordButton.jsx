@@ -12,7 +12,7 @@ export default function RecordButton({
   const { currentTheme } = useTheme();
   const isActive = isRecording && activeRole === role;
 
-  const calmEmotion = EMOTIONS.find((e) => e.name === "차분함");
+  const calmEmotion = EMOTIONS.find((e) => e.name === "차분");
   const iconSrc = calmEmotion?.image?.[currentTheme];
 
   const BORDER = {
@@ -52,7 +52,7 @@ export default function RecordButton({
       <span className="w-12 h-12 relative z-10">
         <img
           src={iconSrc}
-          alt="차분함"
+          alt="차분"
           className="w-full h-full object-contain"
         />
       </span>

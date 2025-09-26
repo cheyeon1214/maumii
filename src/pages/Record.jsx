@@ -15,6 +15,7 @@ import LoadingSpinner from "../components/Loading";
 import AngryModal from "../components/AngryModal";
 import ConfirmModal from "../components/ConfirmModal";
 import { AnimatePresence, motion } from "framer-motion";
+import EMOTIONS from "../data/Emotion";
 
 const debugForm = async (form) => {
   // ⚠️ 훅 사용 금지(컴포넌트 외부)
@@ -86,6 +87,8 @@ const buildWsUrl = () => {
     model_name: "sommers_ko",
     domain: "CALL",
     use_profanity_filter: exposureOn ? "false" : "true",
+     use_disfluency: "true",
+    use_punctuation: "true",
   });
   return `${proto}://${location.host}/ws/stt?${params.toString()}`;
 };
@@ -509,6 +512,19 @@ const buildWsUrl = () => {
     roleRef.current = role;
   }, [role]);
 
+  // 감정 key -> EMOTIONS 메타
+const getEmotionMeta = (key) => {
+  const k = (key || "calm").toLowerCase();
+  return EMOTIONS.find(e => e.key === k) || EMOTIONS.find(e => e.key === "calm");
+};
+
+const meta = getEmotionMeta(emotion);
+const nameKo = meta?.name || "차분";      // 예: "행복", "차분", "공포" …
+const [leftChar = "", rightChar = ""] = nameKo.split(""); // ["행","복"]
+
+// 테마별 감정 이미지 (Emotion.js의 image 사용)
+const centerImg = meta?.image?.[currentTheme] || getEmotionImg(currentTheme, emotion);
+
   /** ---------- render ---------- */
   return (
     <div className="h-full bg-text-200 flex flex-col relative">
@@ -571,6 +587,16 @@ const buildWsUrl = () => {
   {/* 1 히어로: 항상 표시, 상태에 따라 소스/투명도 변경 */}
   <div className="mt-4 flex flex-col items-center space-y-2">
     <div className="flex justify-center my-3 relative">
+         {chat.length > 0 && !composing.active && (
+  <div
+    className="absolute -left-10 top-1/2 -translate-y-1/2
+               text-white text-xl font-kcc tracking-widest
+               select-none pointer-events-none"
+  >
+    {leftChar}
+  </div>
+)}
+     
       <AnimatePresence mode="wait">
         <motion.img
           key={`${currentTheme}-${emotion || "hero"}`} // 감정이 바뀔 때마다 다시 마운트
@@ -588,6 +614,16 @@ const buildWsUrl = () => {
           transition={{ duration: 0.2, ease: "easeOut" }}
         />
       </AnimatePresence>
+
+{chat.length > 0 && !composing.active && (
+  <div
+    className="absolute -right-10 top-1/2 -translate-y-1/2
+               text-white text-xl font-kcc tracking-widest
+               select-none pointer-events-none"
+  >
+    {rightChar}
+  </div>
+)}
 
       {composing.active && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
