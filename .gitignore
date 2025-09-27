@@ -60,3 +60,11 @@ out/
 *.njsproj
 *.sln
 *.sw?
+
+# certs/keys
+*.key
+*.pem
+*.p12
+*.pfx
+certs/
+.env.*
