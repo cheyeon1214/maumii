@@ -77,7 +77,7 @@ export default function MypageTheme() {
 
   if (!user) {
     return (
-      <div className="mx-auto w-full max-w-[330px]">
+      <div className="mx-auto w-full max-w-[330px] h-full overflow-y-auto">
         <Title variant="default" className="mt-10">
           테마 변경
         </Title>
@@ -92,7 +92,7 @@ export default function MypageTheme() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-[330px]">
+    <div className="mx-auto w-full max-w-[330px] h-full overflow-y-auto">
       <Title
         variant="default"
         className="mt-10"
