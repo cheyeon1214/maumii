@@ -6,6 +6,7 @@ import Title from "../../components/common/Title";
 import Collapse from "../../components/common/Collapse";
 import { SmsAPI } from "../../api/sms";
 import api from "../../api/api";
+import { FaArrowLeft } from "react-icons/fa";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -126,9 +127,18 @@ export default function Register() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col h-full bg-white">
-      <div className="shrink-0 m-16">
-        <Title variant="auth">회원가입</Title>
-      </div>
+      <div className="mx-auto w-full m-16 max-w-[330px]">
+              <Title 
+                variant="auth"
+                icon={
+                  <Link to="/">
+                    <FaArrowLeft className="text-lg" />
+                  </Link>
+                }
+              >
+                회원가입
+              </Title>
+            </div>
       <div className="flex-1 overflow-y-auto mx-auto w-full max-w-[330px] px-6 pb-12 space-y-3">
         <Input
           label="이름"

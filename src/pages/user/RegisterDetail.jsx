@@ -1,4 +1,3 @@
-// src/pages/RegisterDetail.jsx
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Title from "../../components/common/Title";
@@ -39,6 +38,7 @@ export default function RegisterDetail() {
   // axios는 200~299 응답이면 여기로 들어옴
   console.log("회원가입 응답:", res.data);
   alert("회원가입 성공!");
+  navigate("/record", { replace: true });
 } catch (err) {
   // axios는 4xx/5xx 에러일 때 catch로 바로 들어옴
   if (err.response) {
