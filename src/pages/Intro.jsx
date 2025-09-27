@@ -74,7 +74,7 @@ export default function Intro() {
         <Link to="/register">
           <motion.div
             className="font-medium cursor-pointer
-            text-[#979092] text-xs font-[Inter]"
+            text-[#979092] text-s font-[Inter]"
             whileHover={{
               scale: 1.1,
               color: "#A960B0",
@@ -96,7 +96,7 @@ export default function Intro() {
         <Link to="/login">
           <motion.div
             className="font-medium cursor-pointer
-            text-[#979092] text-xs font-[Inter]"
+            text-[#979092] text-s font-[Inter]"
             whileHover={{
               scale: 1.1,
               color: "#A960B0",
