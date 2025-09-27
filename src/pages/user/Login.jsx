@@ -6,6 +6,7 @@ import Title from "../../components/common/Title";
 import { useAuth } from "../../context/AuthContext";
 import { useLocation } from "react-router-dom";
 import ConfirmModal from "../../components/common/ConfirmModal";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function Login() {
   const { login, isAuth, checked } = useAuth();
@@ -57,8 +58,17 @@ export default function Login() {
   return (
     <>
     <form onSubmit={onSubmit} className="flex-1 bg-white">
-      <div className="m-16">
-        <Title variant="auth">로그인</Title>
+      <div className="mx-auto w-full m-16 max-w-[330px]">
+        <Title 
+          variant="auth"
+          icon={
+            <Link to="/">
+              <FaArrowLeft className="text-lg" />
+            </Link>
+          }
+        >
+          로그인
+        </Title>
       </div>
 
       <div className="mx-auto w-full max-w-[330px] px-6 pb-24 space-y-4">
