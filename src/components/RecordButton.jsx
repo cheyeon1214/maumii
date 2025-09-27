@@ -40,7 +40,7 @@ export default function RecordButton({
         className,
       ].join(" ")}
     >
-      {/* 🔥 녹음 중일 때 파동 링 */}
+      {/* 녹음 중일 때 파동 링 */}
       {isActive && (
         <span className={[
         "absolute inset-0 rounded-full border-4 borderClass animate-pulseRing",

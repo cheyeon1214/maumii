@@ -5,4 +5,3 @@ export default function LoadingSpinner() {
     </div>
   );
 }
-// import LoadingSpinner from "../components/Loading"; 해서 사용

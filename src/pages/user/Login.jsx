@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
-import Button from "../components/Button";
-import Input from "../components/Input";
-import Title from "../components/Title";
-import { useAuth } from "../context/AuthContext";
+import { useNavigate, Navigate, Link } from "react-router-dom";
+import Button from "../../components/common/Button";
+import Input from "../../components/common/Input";
+import Title from "../../components/common/Title";
+import { useAuth } from "../../context/AuthContext";
 import { useLocation } from "react-router-dom";
-import ConfirmModal from "../components/ConfirmModal";
+import ConfirmModal from "../../components/common/ConfirmModal";
 
 export default function Login() {
   const { login, isAuth, checked } = useAuth();
@@ -79,7 +79,12 @@ export default function Login() {
           <Button full type="submit">
             로그인
           </Button>
-          <div className="text-end text-sm text-slate-400">회원가입</div>
+          <Link
+            to="/register"
+            className="text-end block text-sm text-slate-400 hover:underline underline-offset-2"
+          >
+            회원가입
+          </Link>
         </div>
         {/*  옵션: 소셜 로그인 섹션
         <div className="relative my-4">

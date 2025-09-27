@@ -8,8 +8,8 @@ function SectionHeader({
   progress = 0,       // 0 ~ 1
   onPlay = () => {},
   onSeek = null,      // (ratio: 0~1) => void
-  isActive = false,   // ✅ 추가
-  isPlaying = false,  // ✅ 추가
+  isActive = false,   //  추가
+  isPlaying = false,  //  추가
 }) {
   const pct = Number.isFinite(progress) ? Math.min(1, Math.max(0, progress)) : 0;
 
@@ -18,7 +18,7 @@ function SectionHeader({
       <div className="flex items-center gap-3 px-3">
         <div className="text-slate-700 font-semibold">{dateLabel}</div>
 
-        {/* ▶️/⏸ 토글 */}
+        {/* ▶/⏸ 토글 */}
         <button
           onClick={onPlay}
           className="w-8 h-8 flex items-center justify-center rounded-full bg-button-record text-white shadow"

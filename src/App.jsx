@@ -1,29 +1,28 @@
-// src/App.jsx
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import AuthBootstrap from "./AuthBootstrap";
+import AuthBootstrap from "./context/AuthBootstrap";
 import ProtectedRoute from "./ProtectedRoute";
 
 import Intro from "./pages/Intro.jsx";
-import Register from "./pages/Register.jsx";
-import RegisterDetail from "./pages/RegisterDetail.jsx";
-import Login from "./pages/Login.jsx";
-import Mypage from "./pages/Mypage.jsx";
-import MypageEdit from "./pages/MypageEdit.jsx";
-import Protector from "./pages/Protector.jsx";
-import MypageTheme from "./pages/MypageTheme.jsx";
-import Record from "./pages/Record.jsx";
-import RecordList from "./pages/RecordList.jsx";
-import RecordDetail from "./pages/RecordDetail.jsx";
-import Emotion from "./pages/EmotionCard.jsx";
-import Layout from "./components/Layout.jsx";
+import Register from "./pages/user/Register.jsx";
+import RegisterDetail from "./pages/user/RegisterDetail.jsx";
+import Login from "./pages/user/Login.jsx";
+import Mypage from "./pages/user/Mypage.jsx";
+import MypageEdit from "./pages/user/MypageEdit.jsx";
+import Protector from "./pages/user/Protector.jsx";
+import MypageTheme from "./pages/user/MypageTheme.jsx";
+import Record from "./pages/record/Record.jsx";
+import RecordList from "./pages/record/RecordList.jsx";
+import RecordDetail from "./pages/record/RecordDetail.jsx";
+import Emotion from "./pages/record/EmotionCard.jsx";
+import Layout from "./components/common/Layout.jsx";
 
 export default function App() {
   return (
     <AuthProvider>
       <AuthBootstrap>
         <Routes>
-          {/* ✅ 공개 + 보호 라우트를 모두 Layout으로 감싼다 */}
+          {/* 공개 + 보호 라우트를 모두 Layout으로 감싼다 */}
           <Route element={<Layout />}>
             {/* 공개 라우트 (네비는 Layout 내부 hideNav 로직으로 숨김) */}
             <Route path="/" element={<Intro />} />

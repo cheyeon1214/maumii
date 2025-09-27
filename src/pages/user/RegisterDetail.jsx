@@ -1,11 +1,11 @@
 // src/pages/RegisterDetail.jsx
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Title from "../components/Title";
-import Button from "../components/Button";
-import ThemeSelector from "../components/ThemeSelector";
-import LevelSelector from "../components/LevelSelector";
-import api from "../api/api";
+import Title from "../../components/common/Title";
+import Button from "../../components/common/Button";
+import ThemeSelector from "../../components/ThemeSelector";
+import LevelSelector from "../../components/LevelSelector";
+import api from "../../api/api";
 
 export default function RegisterDetail() {
   const { state } = useLocation(); // 1단계 데이터

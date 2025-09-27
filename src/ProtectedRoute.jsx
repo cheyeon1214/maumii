@@ -8,7 +8,7 @@
 //   return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
 // }
 
-// src/ProtectedRoute.jsx
+
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
