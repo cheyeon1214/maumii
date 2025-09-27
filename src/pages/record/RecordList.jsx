@@ -3,13 +3,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
-import CalendarBottomSheet from "../components/CalendarBottomSheet";
-import Header from "../components/Header";
-import ConfirmModal from "../components/ConfirmModal";
-import { useAuth } from "../context/AuthContext";
-import api from "../api/api";
+import CalendarBottomSheet from "../../components/CalendarBottomSheet";
+import Header from "../../components/common/Header";
+import ConfirmModal from "../../components/common/ConfirmModal";
+import { useAuth } from "../../context/AuthContext";
+import api from "../../api/api";
 
-// utils/dateFormat.js
 export function formatKoreanDateTime(dateString) {
   if (!dateString) return "";
 
@@ -64,7 +63,6 @@ export default function RecordList() {
       setRecordList(allRecords);
       return;
     }
-    // 백엔드 컨트롤러 호출 ... 단어 검색
 
         api.get(`/records/${uId}/record-list/${encodeURIComponent(keyword)}`)
       

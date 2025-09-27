@@ -1,13 +1,13 @@
-import Title from "../components/Title";
+import Title from "../../components/common/Title";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
-import Button from "../components/Button";
-import Input from "../components/Input";
-import api from "../api/api";
-import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../hooks/useTheme";
-import ConfirmModal from "../components/ConfirmModal";
+import Button from "../../components/common/Button";
+import Input from "../../components/common/Input";
+import api from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../hooks/useTheme";
+import ConfirmModal from "../../components/common/ConfirmModal";
 
 export default function MypageEdit() {
   const [phone, setPhone] = useState("");
@@ -140,7 +140,7 @@ export default function MypageEdit() {
           style={{ borderRadius: "10px" }}
         >
           <img
-             src={themeConfig.profileImage} // ✅ 경로 하드코딩 제거
+             src={themeConfig.profileImage} // 경로 하드코딩 제거
             alt="User Avatar"
             className="w-full h-full object-cover rounded-[10px] px-1 py-2"
           />

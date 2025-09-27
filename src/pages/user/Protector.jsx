@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import Title from "../components/Title";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import Collapse from "../components/Collapse";
-import ConfirmModal from "../components/ConfirmModal";
+import Title from "../../components/common/Title";
+import Input from "../../components/common/Input";
+import Button from "../../components/common/Button";
+import Collapse from "../../components/common/Collapse";
+import ConfirmModal from "../../components/common/ConfirmModal";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaCirclePlus } from "react-icons/fa6";
-import api from "../api/api";
-import { useAuth } from "../context/AuthContext";
+import api from "../../api/api";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Protector() {
   const [email, setEmail] = useState("");

@@ -1,12 +1,12 @@
 // src/pages/EmotionCard.jsx
 import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import EMOTIONS from "../data/Emotion.js";
+import EMOTIONS from "../../data/Emotion.js";
 import { motion, useAnimation } from "framer-motion";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "../../hooks/useTheme";
 
 export default function EmotionCard({ onClose }) {
-  const { currentTheme } = useTheme(); // ✅ 전역 테마 (cloud | bear)
+  const { currentTheme } = useTheme(); // 전역 테마 (cloud | bear)
   const [index, setIndex] = useState(0);
   const controls = useAnimation();
 
@@ -82,7 +82,7 @@ export default function EmotionCard({ onClose }) {
               }}
             >
               <img
-                src={emotion.image[currentTheme]} // ✅ 테마별 아이콘 자동 선택
+                src={emotion.image[currentTheme]} // 테마별 아이콘 자동 선택
                 alt={emotion.name}
                 className="w-[230px] h-[230px] mb-3 mt-10"
               />

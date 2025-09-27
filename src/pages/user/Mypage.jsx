@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Title from "../components/Title";
+import Title from "../../components/common/Title";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { FaArrowRightToBracket } from "react-icons/fa6";
-import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../hooks/useTheme";
-import ConfirmModal from "../components/ConfirmModal";
+import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../hooks/useTheme";
+import ConfirmModal from "../../components/common/ConfirmModal";
 
 export default function Mypage() {
   const { user, logout } = useAuth();

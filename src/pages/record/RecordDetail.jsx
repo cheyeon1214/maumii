@@ -1,19 +1,19 @@
 // import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../../components/common/Header";
 import { FaRegEdit } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
-import SectionHeader from "../components/SectionHeader";
-import Bubble from "../components/Bubble";
-import EMOTIONS from "../data/Emotion.js";
+import SectionHeader from "../../components/SectionHeader";
+import Bubble from "../../components/Bubble";
+import EMOTIONS from "../../data/Emotion.js";
 import { createPortal } from "react-dom";
-import { useAudioPlayer } from "../hooks/useAudioPlayer";
-import { useRecords } from "../hooks/useRecords.js";
-import ConfirmModal from "../components/ConfirmModal";
-import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../hooks/useTheme";
-import api from "../api/api";
+import { useAudioPlayer } from "../../hooks/useAudioPlayer";
+import { useRecords } from "../../hooks/useRecords.js";
+import ConfirmModal from "../../components/common/ConfirmModal";
+import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../hooks/useTheme";
+import api from "../../api/api";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function RecordDetail() {
@@ -369,12 +369,12 @@ export default function RecordDetail() {
         transition={{ duration: 0.18 }}
       />
 
-      {/* ⬇️ 이 컨테이너는 motion 쓰지 말고 그대로 유지 (위치 보존) */}
+      {/* 이 컨테이너는 motion 쓰지 말고 그대로 유지 (위치 보존) */}
       <div
         className="fixed left-1/2 -translate-x-1/2 md:translate-y-12 translate-y-[60px] w-full md:max-w-[390px] pointer-events-none"
         style={{ bottom: `calc(70px)` }}
       >
-        {/* ⬇️ 안쪽 패널만 motion으로 슬라이드 업 */}
+        {/* 안쪽 패널만 motion으로 슬라이드 업 */}
         <motion.div
           className="pointer-events-auto w-full rounded-b-2xl rounded-t-[40px] bg-white shadow-xl"
           initial={{ y: 40, opacity: 0 }}

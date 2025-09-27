@@ -1,6 +1,4 @@
-// src/data/Emotion.js
-
-// 1) 테마별 감정 아이콘을 한 번에 모읍니다 (Vite 전용)
+// 1) 테마별 감정 아이콘을 한 번에 
 const cloudImgs = import.meta.glob("../assets/images/emotion/cloud_*.png", {
   eager: true,
   import: "default",

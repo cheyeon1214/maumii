@@ -1,4 +1,3 @@
-// src/hooks/useTheme.js
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getThemeConfig } from "../utils/themeUtils";
@@ -30,7 +29,7 @@ useEffect(() => {
   return () => obs.disconnect();
 }, []);
 
-  // ✅ 우선순위: user > DOM > fallback
+  // 우선순위: user > DOM > fallback
   const currentTheme = (user?.uTheme?.toLowerCase() || domTheme || "cloud");
   const themeConfig = getThemeConfig(currentTheme);
 

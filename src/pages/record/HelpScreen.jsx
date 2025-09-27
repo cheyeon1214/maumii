@@ -1,8 +1,7 @@
-// src/pages/HelpScreen.jsx
 import { motion } from "framer-motion";
 import { FaBook } from "react-icons/fa";
 import { FaBoxArchive } from "react-icons/fa6";
-import RecordButton from "../components/RecordButton";
+import RecordButton from "../../components/RecordButton";
 
 /** 위/아래 세로 화살표 */
 function VerticalArrow({ dir = "down", className = "" }) {

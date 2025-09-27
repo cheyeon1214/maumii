@@ -59,7 +59,7 @@ export default function AngryModal({ open, onClose, onGuide }) {
              rounded-2xl border border-rose-100/60 shadow-xl 
              bg-white/90 overflow-hidden
              flex flex-col items-center justify-center
-             h-[400px]"   // 🔥 높이 늘림
+             h-[400px]"
   initial={{ opacity: 0, scale: 0.92, y: 14 }}
   animate={{ opacity: 1, scale: 1, y: 0 }}
   exit={{ opacity: 0, scale: 0.96, y: 10 }}
@@ -86,7 +86,7 @@ export default function AngryModal({ open, onClose, onGuide }) {
   </div>
 
   {/* 내용 */}
-  <div className="px-5 sm:px-6 text-center">  {/* 🔥 text-center */}
+  <div className="px-5 sm:px-6 text-center">  {/* text-center */}
     <div className="text-primary font-semibold text-base sm:text-lg mb-2">
       여기서 잠깐!
     </div>

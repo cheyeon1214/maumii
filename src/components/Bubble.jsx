@@ -1,8 +1,7 @@
-// Bubble.jsx
 import React from "react";
 import { useTheme } from "../hooks/useTheme";
 import { getEmotionImg } from "../utils/emotion";
-import { THEMES, getBubbleBg } from "../utils/themeUtils"; // ⬅️ getBubbleBg 가져오기
+import { THEMES, getBubbleBg } from "../utils/themeUtils";
 
 function Bubble({ bId, me = false, text = "", sub, isActive = false, emotion }) {
   const { currentTheme } = useTheme();
@@ -12,7 +11,7 @@ function Bubble({ bId, me = false, text = "", sub, isActive = false, emotion }) 
     THEMES[currentTheme]?.profileImage ||
     THEMES.cloud.profileImage;
 
-  // ⬅️ 여기서 테마별 말풍선 배경색 뽑기
+  // 여기서 테마별 말풍선 배경색 뽑기
   const bubbleBg = getBubbleBg(currentTheme, me);
 
   return (
@@ -36,7 +35,7 @@ function Bubble({ bId, me = false, text = "", sub, isActive = false, emotion }) 
                   ? "shadow-[0_0_14px_rgba(126,104,255,0.6)] ring-1 ring-purple-400/40"
                   : "",
               ].join(" ")}
-              // ⬅️ 배경색을 토큰으로 주입
+              // 배경색을 토큰으로 주입
               style={{ backgroundColor: bubbleBg }}
             >
               {text}
@@ -60,7 +59,7 @@ function Bubble({ bId, me = false, text = "", sub, isActive = false, emotion }) 
                   ? "shadow-[0_0_14px_rgba(126,104,255,0.6)] ring-1 ring-purple-400/40"
                   : "",
               ].join(" ")}
-              // ⬅️ 배경색을 토큰으로 주입
+              // 배경색을 토큰으로 주입
               style={{ backgroundColor: bubbleBg }}
             >
               {text}

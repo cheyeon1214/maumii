@@ -61,7 +61,7 @@ export function useRecords(rlId, userId) {
             header: {
               dateLabel: fmtDateLabel(rec.rCreatedAt),
               duration: fmtDurationKorean(totalMs), // 기존 라벨 유지(백업용)
-              totalMs,                              // ⬅️ 추가: 숫자(ms)
+              totalMs,                              
             },
             talks,
           };

@@ -1,7 +1,7 @@
 // src/components/Layout.jsx
 import { useLocation, useNavigate, Outlet } from "react-router-dom";
 import Navigation from "./Navigation.jsx";
-import { useApplyTheme } from "../useApplyTheme";
+import { useApplyTheme } from "../../hooks/useApplyTheme";
 
 export default function Layout() {
   useApplyTheme();

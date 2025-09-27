@@ -11,7 +11,7 @@ export const RecordsAPI = {
 
   /** 특정 rlId의 레코드들(+버블) 조회 */
   async getRecordsByList(rlId, userId) {
-    const { data } = await api.get(`/record-lists/${rlId}/records`, {
+    const { data } = await api.get(`/records/${rlId}`, {
       params: { userId: userId ?? "" },
     });
     return Array.isArray(data) ? data : [];
