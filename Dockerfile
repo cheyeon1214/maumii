@@ -1,16 +1,20 @@
+# 1) build 단계
 FROM node:22 AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npm run build
 
+# 2) nginx 런타임
 FROM nginx:alpine
-# envsubst를 위해 gettext 설치
-RUN apk add --no-cache gettext
-
 COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf.template /etc/nginx/templates/nginx.conf.template
 
-# Cloud Run이 주입한 PORT 값을 사용해 실제 conf 생성 후 nginx 실행
-CMD sh -c 'envsubst < /etc/nginx/templates/nginx.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g "daemon off;"'
+# 템플릿으로 넣기
+COPY default.conf.template /etc/nginx/templates/default.conf.template
+
+# (선택) 로그를 콘솔로
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+ && ln -sf /dev/stderr /var/log/nginx/error.log
+
+CMD ["nginx", "-g", "daemon off;"]
