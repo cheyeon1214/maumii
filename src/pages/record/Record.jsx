@@ -16,7 +16,7 @@ import AngryModal from "../../components/AngryModal";
 import ConfirmModal from "../../components/common/ConfirmModal";
 import { AnimatePresence, motion } from "framer-motion";
 import EMOTIONS from "../../data/Emotion";
-
+const API = import.meta.env.VITE_API_BASE_URL || '';
 const debugForm = async (form) => {
   // 훅 사용 금지(컴포넌트 외부)
   const blob = form.get("record"); // Blob(application/json)
@@ -77,20 +77,21 @@ export default function Record() {
   const utterStartRef = useRef(null); // 발화 시작시간
 
   // 노출 설정에 따라 WS URL 생성
-  const buildWsUrl = () => {
-    const proto = location.protocol === "https:" ? "wss" : "ws";
-    const params = new URLSearchParams({
-      encoding: "OGG_OPUS",
-      sample_rate: "16000",
-      use_itn: "true",
-      model_name: "sommers_ko",
-      domain: "CALL",
-      use_profanity_filter: exposureOn ? "false" : "true",
-      use_disfluency: "true",
-      use_punctuation: "true",
-    });
-    return `${proto}://${location.host}/ws/stt?${params.toString()}`;
-  };
+const buildWsUrl = () => {
+  // API가 있으면 그걸 ws로 치환, 없으면 현재 호스트 사용
+  const base = API ? API.replace(/^http/i, 'ws') : (location.protocol === 'https:' ? 'wss' : 'ws') + '://' + location.host;
+  const params = new URLSearchParams({
+    encoding: "OGG_OPUS",
+    sample_rate: "16000",
+    use_itn: "true",
+    model_name: "sommers_ko",
+    domain: "CALL",
+    use_profanity_filter: exposureOn ? "false" : "true",
+    use_disfluency: "true",
+    use_punctuation: "true",
+  });
+  return `${base}/ws/stt?${params.toString()}`;
+};
 
   // 기존 상수 대신 함수 호출 결과 사용
   const WS_URL = buildWsUrl();
