@@ -51,7 +51,7 @@ export function AuthProvider({ children }) {
 
   /** 로그인: 토큰 저장 → /auth/me 로드 */
   const login = useCallback(async (uId, uPwd) => {
-    const { headers } = await api.post("/auth/signin", null, {
+    const { headers } = await api.post("/api/auth/signin", null, {
       params: { username: uId, password: uPwd }, // 필터가 request.getParameter로 읽음
     });
 
