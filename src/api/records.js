@@ -20,7 +20,10 @@ export const RecordsAPI = {
   /** 현재 세션 저장 (FormData) */
   async saveRecord(formData) {
     const { data } = await api.post("/records/save", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "multipart/form-data",
+    },
     });
     return data;
   },
