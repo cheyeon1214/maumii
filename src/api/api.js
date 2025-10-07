@@ -2,8 +2,8 @@ import axios from "axios";
 
 // 환경 변수 기반 (로컬/배포 모두 자동 인식)
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "https://localhost:8080/api",
-  withCredentials: true, // 쿠키/세션 기반도 허용
+  baseURL: `${import.meta.env.VITE_API_BASE_URL || "https://localhost:8080"}/api`,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
