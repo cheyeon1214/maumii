@@ -10,7 +10,7 @@ const api = axios.create({
 });
 
 // 저장된 토큰 자동 설정
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("ACCESS_TOKEN");
 if (token) {
   api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
@@ -18,7 +18,7 @@ if (token) {
 // 요청 인터셉터 (토큰 갱신 대응)
 api.interceptors.request.use((config) => {
   if (!config.headers["Authorization"]) {
-    const t = localStorage.getItem("token");
+    const t = localStorage.getItem("ACCESS_TOKEN");
     if (t) config.headers["Authorization"] = `Bearer ${t}`;
   }
   return config;

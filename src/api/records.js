@@ -21,8 +21,7 @@ export const RecordsAPI = {
   async saveRecord(formData) {
     const { data } = await api.post("/records/save", formData, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("ACCESS_TOKEN")}`
     },
     });
     return data;
